@@ -24,6 +24,7 @@
                 {{ build.tag_name }}
               </h1>
             </div>
+            <pipeline :project="piepeline" :pipeline="pipeline" />
           </div>
           <div class="extra content">
             <span class="left floated hashtag build-id">
@@ -44,9 +45,13 @@
 </template>
 
 <script>
+  import Pipeline from './Pipeline'
   export default {
     name: 'builds',
     props: ['onBuilds', 'sortedBuilds', 'hideSuccessCards', 'hideVersion'],
+    components: {
+      Pipeline
+    },
     data () {
       return {
         gitlab: ''
