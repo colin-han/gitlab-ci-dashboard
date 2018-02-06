@@ -407,25 +407,33 @@ var root = new Vue({
       }
     },
     fetchPipelines (selectedProject) {
+      console.info(0)
       var updated = false
       if (!selectedProject) {
-        return
+        console.info(1)
+        return Promise.reject('project is empty')
       }
       const {
         repo,
         project
       } = selectedProject
-      getCommits(project.id, repo.branch).then(({data}) => {
+      console.info(2, selectedProject)
+      return getCommits(project.id, repo.branch).then(({data}) => {
         const {
           message
         } = data
+        console.info(3, data)
         const authorName = data['author_name']
         const lastPipelineId = data['last_pipeline'].id
-        getTags(project.id)
+        console.info(4)
+        return getTags(project.id)
           .then((response) => {
+            console.info(5, response)
             const tag = getTopItem(response.data)
-            getPipeline(project.id, lastPipelineId)
+            console.info(6, tag)
+            return getPipeline(project.id, lastPipelineId)
               .then((pipeline) => {
+                console.info(7)
                 const lastPipeline = pipeline.data
                 this.onBuilds.forEach((build) => {
                   if (
@@ -441,6 +449,8 @@ var root = new Vue({
                     build.status = lastPipeline.status
                     build.lastStatus = build.status
                     build.id = lastPipeline.id
+                    build.projectId = project.id
+                    build.pipelineId = lastPipeline.id
                     build.started_at = moment(lastPipeline.started_at).fromNow()
                     build.author = authorName
                     build.commit_message = message
@@ -450,6 +460,7 @@ var root = new Vue({
                     build.namespace_name = project.namespace.name
                     build.link_to_branch = this.getLinkToBranch(project, repo)
                   }
+                  return Promise.resolve(build)
                 })
                 if (!updated) {
                   this.addStatusQueue(lastPipeline.status, INCREASE_ACTION)
@@ -458,6 +469,8 @@ var root = new Vue({
                   buildToAdd.status = lastPipeline.status
                   buildToAdd.lastStatus = buildToAdd.status
                   buildToAdd.id = lastPipeline.id
+                  buildToAdd.projectId = project.id
+                  buildToAdd.pipelineId = lastPipeline.id
                   buildToAdd.started_at = moment(lastPipeline.started_at).fromNow()
                   buildToAdd.author = authorName
                   buildToAdd.commit_message = message
@@ -467,6 +480,7 @@ var root = new Vue({
                   buildToAdd.namespace_name = project.namespace.name
                   buildToAdd.link_to_branch = this.getLinkToBranch(project, repo)
                   this.onBuilds.push(buildToAdd)
+                  return Promise.resolve(buildToAdd)
                 }
               })
               .catch(this.handlerError.bind(this))

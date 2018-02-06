@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "unit": "jest --testPathPattern=test/unit/specs --coverage",
+    "unit": "jest test/unit/specs --coverage",
+    "test-watch": "jest test/unit/specs --watchAll",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
     "build": "rm -rf standalone dist && mkdir standalone && node build/build.js && cp -R dist/* standalone/ && cp index.js standalone/",
@@ -128,6 +129,9 @@
     "collectCoverageFrom": [
       "src/**/*.{js,vue}",
       "!**/node_modules/**"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!vue-octicon)"
     ]
   },
   "engines": {
