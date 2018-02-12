@@ -411,7 +411,7 @@ var root = new Vue({
       var updated = false
       if (!selectedProject) {
         console.info(1)
-        return Promise.reject('project is empty')
+        return Promise.reject(Error('project is empty'))
       }
       const {
         repo,
@@ -460,6 +460,7 @@ var root = new Vue({
                     build.namespace_name = project.namespace.name
                     build.link_to_branch = this.getLinkToBranch(project, repo)
                   }
+                  console.info(8)
                   return Promise.resolve(build)
                 })
                 if (!updated) {
@@ -480,6 +481,7 @@ var root = new Vue({
                   buildToAdd.namespace_name = project.namespace.name
                   buildToAdd.link_to_branch = this.getLinkToBranch(project, repo)
                   this.onBuilds.push(buildToAdd)
+                  console.info(9)
                   return Promise.resolve(buildToAdd)
                 }
               })
