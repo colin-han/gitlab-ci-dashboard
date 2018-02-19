@@ -279,7 +279,7 @@ describe('main.js', () => {
       const url = vmMethods.getLinkToBranch(mockedProject, mockedRepo)
       expect(url).toEqual('gitlabciProtocol://gitlab/n1/p1/tree/b1')
     })
-    /* Deveria obter fetchPipelines*/
+    /* Deveria carregar as pipelines*/
     it('===>', async () => {
       const repo = {
         nameWithNamespace: 'a/b',
