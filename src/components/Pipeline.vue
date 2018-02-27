@@ -101,6 +101,8 @@ Copyright (c) 2018 Timo Schwarzer (https://github.com/timoschwarzer)
       setupDurationCounter () {
         const pipeline = this.$props.pipeline
 
+        console.info('setupDurationCounter', pipeline.finished_at, pipeline.started_at, pipeline.created_at, pipeline.duration, pipeline.updated_at)
+
         const startedAtDiffSeconds = ((pipeline.finished_at !== null ? new Date(pipeline.finished_at) : new Date()) - new Date(pipeline.started_at !== null ? pipeline.started_at : pipeline.created_at)) / 1000
 
         if (pipeline.status !== 'running' && pipeline.duration !== null && (this.$data.duration === null || Math.abs(pipeline.duration - this.$data.duration) > 5)) {

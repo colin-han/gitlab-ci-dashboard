@@ -72,6 +72,7 @@ export const getCommits = (projectId, branchName) => {
 }
 
 export const getJobs = (projectId, pipelineId) => {
+  console.info('getJobs', projectId, pipelineId)
   if (projectId == null || pipelineId == null) {
     return Promise.reject(new Error('projectId or pipelineId are empty'))
   }

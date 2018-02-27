@@ -342,7 +342,7 @@ var root = new Vue({
         return
       }
       const selectedItem = s[0]
-      if (statusItem.action === INCREASE_ACTION) {
+      if (statusItem.action === INCREASE_ACTON) {
         selectedItem.total++
       } else if (statusItem.action === DECREASE_ACTION) {
         selectedItem.total--
@@ -384,6 +384,8 @@ var root = new Vue({
           b.tag_name = tag && tag.name
           b.namespace_name = project.namespace.name
           b.link_to_branch = this.getLinkToBranch(project, repo)
+          b.pipeline = build.pipeline
+          b.gitlabProject = project
         }
       }
 
@@ -401,7 +403,9 @@ var root = new Vue({
           branch: repo.branch,
           tag_name: tag && tag.name,
           namespace_name: project.namespace.name,
-          link_to_branch: this.getLinkToBranch(project, repo)
+          link_to_branch: this.getLinkToBranch(project, repo),
+          pipeline: build.pipeline,
+          gitlabProject: project
         }
         onBuilds.push(buildToAdd)
       }

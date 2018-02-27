@@ -27,7 +27,7 @@
                 {{ build.tag_name }}
               </h1>
             </div>
-            <pipeline :project="build.project" :pipeline="build.pipeline" />
+            <pipeline :project="build.gitlabProject" :pipeline="build.pipeline" />
           </div>
           <div class="extra content">
             <span class="left floated hashtag build-id">
