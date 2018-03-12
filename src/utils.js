@@ -1,4 +1,4 @@
-const sort = require('semver-sort')
+import sort from 'semver-sort'
 
 import {CREATED, MANUAL, SKIPPED} from './status'
 
@@ -41,5 +41,5 @@ export const getTopItemByName = (list) => {
   if (!Array.isArray(list) || list.length === 0) {
     return
   }
-  return sort.desc(list)[0];
+  return sort.desc(list).shift()
 }
